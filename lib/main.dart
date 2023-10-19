@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guess_me_up/screens/home_screen.dart';
 
 void main(List<String> args) {
   runApp(const App());
@@ -9,9 +10,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Guess Me Up',
-      home: Placeholder(),
+      home: const HomeScreen(),
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
     );
   }
 }
