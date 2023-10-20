@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guess_me_up/screens/numpad.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -10,6 +11,10 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Center(
+        child: NumPad(onChange: (s) {}),
+      ),
+    );
   }
 }
