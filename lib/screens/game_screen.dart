@@ -13,7 +13,14 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: NumPad(onChange: (s) {}),
+        child: NumPad(
+          onChange: (s) {
+            print(s);
+          },
+          onSubmit: (s) {
+            print('submit $s');
+          },
+        ),
       ),
     );
   }

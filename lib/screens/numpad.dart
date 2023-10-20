@@ -3,7 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NumPad extends StatefulWidget {
   final Function(String) onChange;
-  const NumPad({super.key, required this.onChange});
+  final Function(String) onSubmit;
+  const NumPad({super.key, required this.onChange, required this.onSubmit});
 
   @override
   State<NumPad> createState() => _NumPadState();
@@ -71,7 +72,9 @@ class _NumPadState extends State<NumPad> {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.onSubmit(number);
+              },
               style: const ButtonStyle(
                   textStyle: MaterialStatePropertyAll(
                       TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
