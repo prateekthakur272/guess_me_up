@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NumPad extends StatefulWidget {
-  final Function(String) onChange;
-  final Function(String) onSubmit;
+  final Function(int) onChange;
+  final Function(int) onSubmit;
   const NumPad({super.key, required this.onChange, required this.onSubmit});
 
   @override
@@ -11,7 +11,7 @@ class NumPad extends StatefulWidget {
 }
 
 class _NumPadState extends State<NumPad> {
-  String number = '';
+  String _number = '';
   @override
   Widget build(BuildContext context) {
     numPadButton(IconData icon, int value) => Expanded(
@@ -20,7 +20,7 @@ class _NumPadState extends State<NumPad> {
           child: ElevatedButton(
             onPressed: () {
               _button(value);
-              widget.onChange(number);
+              widget.onChange(int.tryParse(_number) ?? 0);
             },
             style: const ButtonStyle(
                 splashFactory: InkSplash.splashFactory,
@@ -73,7 +73,7 @@ class _NumPadState extends State<NumPad> {
           padding: const EdgeInsets.all(4.0),
           child: ElevatedButton(
               onPressed: () {
-                widget.onSubmit(number);
+                widget.onSubmit(int.tryParse(_number) ?? 0);
               },
               style: const ButtonStyle(
                   textStyle: MaterialStatePropertyAll(
@@ -92,17 +92,17 @@ class _NumPadState extends State<NumPad> {
     switch (input) {
       case 100:
         {
-          number = '';
+          _number = '';
         }
       case 101:
         {
-          if (number.isNotEmpty) {
-            number = number.substring(0, number.length - 1);
+          if (_number.isNotEmpty) {
+            _number = _number.substring(0, _number.length - 1);
           }
         }
       default:
         {
-          number += input.toString();
+          _number += input.toString();
         }
     }
   }
