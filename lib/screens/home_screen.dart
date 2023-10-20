@@ -15,6 +15,11 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Icon(
+                Icons.numbers_rounded,
+                color: Colors.green.shade400,
+                size: 100,
+              ),
               const Text(
                 'Guess the number in least time,\nNumber is between 0-100,\nDon\'t worry we are here to help you.',
                 textAlign: TextAlign.center,
