@@ -27,6 +27,7 @@ class App extends StatelessWidget {
               onBackground: Colors.black,
               surface: Colors.white,
               onSurface: Colors.black),
+          dividerTheme: DividerThemeData(color: Colors.grey.shade300),
           appBarTheme: const AppBarTheme(
               foregroundColor: Colors.black,
               titleTextStyle: TextStyle(
