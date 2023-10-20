@@ -10,6 +10,7 @@ class Game {
   }
 
   bool check(int guess) {
+    attempts++;
     return _number == guess;
   }
 
