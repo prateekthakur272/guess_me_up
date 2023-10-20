@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guess_me_up/game.dart';
 import 'package:guess_me_up/screens/numpad.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -14,12 +17,28 @@ class _GameScreenState extends State<GameScreen> {
   String display = '0';
   late Game game;
   String message = 'Secret number has been generated,\nfind it quickly.';
+  late Timer timer;
+  int countDown = 90;
 
   @override
   void initState() {
     game = Game();
     game.startGame();
+    timer = startTimer();
     super.initState();
+  }
+
+  Timer startTimer() {
+    return Timer.periodic(const Duration(seconds: 1), (t) {
+      setState(() {
+        if (countDown > 0) {
+          countDown--;
+        } else {
+          game.finish();
+          t.cancel();
+        }
+      });
+    });
   }
 
   @override
@@ -37,6 +56,24 @@ class _GameScreenState extends State<GameScreen> {
                 textAlign: TextAlign.center,
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularPercentIndicator(
+                  radius: 56,
+                  percent: (countDown / 90),
+                  lineWidth: 12,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  center: Text(
+                    countDown.toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 44, fontWeight: FontWeight.bold),
+                  ),
+                  progressColor: countDown > 15
+                      ? Colors.green.shade400
+                      : Colors.red.shade300,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -71,6 +108,7 @@ class _GameScreenState extends State<GameScreen> {
                     message = game.getHints(s);
                   });
                   if (game.check(s)) {
+                    timer.cancel();
                     showDialog(
                         context: context,
                         builder: ((context) => Dialog(
@@ -126,6 +164,8 @@ class _GameScreenState extends State<GameScreen> {
                                                 game.finish();
                                                 game = Game();
                                                 game.startGame();
+                                                countDown = 90;
+                                                timer = startTimer();
                                                 message =
                                                     'Secret number has been generated,\nfind it quickly.';
                                               });
