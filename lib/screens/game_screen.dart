@@ -36,6 +36,78 @@ class _GameScreenState extends State<GameScreen> {
         } else {
           game.finish();
           t.cancel();
+          showDialog(
+              context: context,
+              builder: ((context) => Dialog(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Icon(
+                          FontAwesomeIcons.clock,
+                          size: 100,
+                          color: Colors.green.shade400,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          'Game Over',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const Text(
+                          'None of your guess was correct',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'Total guess: ${game.attempts}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FilledButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Colors.red.shade300)),
+                                onPressed: () {
+                                  Navigator.popUntil(
+                                      context, (route) => route.isFirst);
+                                },
+                                child: const Text('Quit')),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            FilledButton(
+                                onPressed: () {
+                                  setState(() {
+                                    game.finish();
+                                    game = Game();
+                                    game.startGame();
+                                    countDown = 90;
+                                    timer = startTimer();
+                                    message =
+                                        'Secret number has been generated,\nfind it quickly.';
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Play Again'))
+                          ],
+                        )
+                      ]),
+                    ),
+                  )));
         }
       });
     });
